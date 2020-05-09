@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
@@ -10,7 +11,7 @@ namespace DataAccess.Migrations
                 name: "Ingredients",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     IngredientCategory = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true)
                 },
@@ -23,7 +24,7 @@ namespace DataAccess.Migrations
                 name: "Recipes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Instructions = table.Column<string>(nullable: true)
                 },
@@ -36,8 +37,8 @@ namespace DataAccess.Migrations
                 name: "RecipeIngredients",
                 columns: table => new
                 {
-                    RecipeId = table.Column<string>(nullable: false),
-                    IngredientId = table.Column<string>(nullable: false)
+                    RecipeId = table.Column<Guid>(nullable: false),
+                    IngredientId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

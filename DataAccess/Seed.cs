@@ -15,15 +15,21 @@ namespace DataAccess
                 var recipes = new List<Recipe>
                 {
                     new Recipe {
-                        Id = "rjskOm",
+                        Id = new Guid(),
                         Instructions = "nakrájet, uvařit",
                         Title = "Rajská omáčka"
                     },
                     new Recipe
                     {
-                        Id = "chlbMsl",
+                        Id = new Guid(),
+                        Instructions = "uvařit",
+                        Title = "Bramborová polévka"
+                    },
+                    new Recipe
+                    {
+                        Id = new Guid(),
                         Instructions = "namazat",
-                        Title = "Chléb s máslem"
+                        Title = "Palačinky"
                     }
                 };
 
@@ -37,25 +43,25 @@ namespace DataAccess
                 {
                     new Ingredient
                     {
-                        Id = "chlb",
-                        Title = "chléb"
+                        Id = new Guid(),
+                        Title = "hladká mouka"
                     },
                     new Ingredient
                     {
-                        Id = "rjsk",
+                        Id = new Guid(),
                         Title = "rajčata"
                     },
                     new Ingredient
                     {
-                        Id = "msl",
-                        Title = "máslo"
+                        Id = new Guid(),
+                        Title = "brambory"
                     }
                 };
 
                 ctx.Ingredients.AddRange(ingredients);
                 ctx.SaveChanges();
             }
-
+            /*
             if (!ctx.RecipeIngredients.Any())
             {
                 var joinTbl = new List<RecipeIngredients>
@@ -69,6 +75,7 @@ namespace DataAccess
                 ctx.RecipeIngredients.AddRange(joinTbl);
                 ctx.SaveChanges();
             }
+            */
         }
     }
 }

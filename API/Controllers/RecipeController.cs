@@ -27,5 +27,11 @@ namespace API.Controllers
         {
             return await _mediator.Send(new RecipesList.Query());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Recipe>> GetDetail(Guid id)
+        {
+            return await _mediator.Send(new RecipeDetail.Query { RecipeId = id });
+        }
     }
 }

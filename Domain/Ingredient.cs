@@ -6,7 +6,7 @@ namespace Domain
 {
     public class Ingredient
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string IngredientCategory { get; set; }
         public string Title { get; set; }
 
