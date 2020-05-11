@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200509191119_init")]
+    [Migration("20200511182805_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,15 @@ namespace DataAccess.Migrations
 
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Meassure")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NumberOfServings")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("RecipeId", "IngredientId");
 

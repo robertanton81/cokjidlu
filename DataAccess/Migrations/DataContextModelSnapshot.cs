@@ -58,6 +58,15 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("IngredientId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Meassure")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NumberOfServings")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("RecipeId", "IngredientId");
 
                     b.HasIndex("IngredientId");

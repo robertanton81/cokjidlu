@@ -38,7 +38,10 @@ namespace DataAccess.Migrations
                 columns: table => new
                 {
                     RecipeId = table.Column<Guid>(nullable: false),
-                    IngredientId = table.Column<Guid>(nullable: false)
+                    IngredientId = table.Column<Guid>(nullable: false),
+                    Meassure = table.Column<string>(nullable: true),
+                    Qty = table.Column<int>(nullable: false),
+                    NumberOfServings = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
