@@ -10,7 +10,47 @@ namespace DataAccess
     {
         public static void SeedData(DataContext ctx)
         {
-            if(!ctx.Recipes.Any())
+            /*
+            List<List<List<RecipeWebScraper>>> scraperRecipes = new List<List<List<RecipeWebScraper>>>();
+            WebScraper ws = new WebScraper();
+            ws.KucharkaProDceru = true;
+            scraperRecipes = ws.getRecipes();
+
+            List<Recipe> recipesDB = new List<Recipe>();
+            List<Ingredient> ingredientsDB = new List<Ingredient>();
+
+            foreach (var wholeScraper in scraperRecipes)
+            {
+                foreach (var singleScraper in wholeScraper)
+                {
+                    foreach (var recipe in singleScraper)
+                    {
+                        recipesDB.Add(
+                            new Recipe {
+                                Id = new Guid(),
+                                Instructions = string.Join("|", recipe.instructions),
+                                Title = recipe.title
+                            }
+                        );
+                        foreach (var ingredients in recipe.ingredients)
+                        {
+                            ingredientsDB.Add(
+                            new Ingredient
+                                {
+                                    Id = new Guid(),
+                                    Title = ingredients
+                                }
+                            );
+                        }
+                    }
+                }
+            }
+            ctx.Recipes.AddRange(recipesDB);
+            ctx.SaveChanges();
+            ctx.Ingredients.AddRange(ingredientsDB);
+            ctx.SaveChanges();
+            */
+            if (!ctx.Recipes.Any())
             {
                 var recipes = new List<Recipe>
                 {
