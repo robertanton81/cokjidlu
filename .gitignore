@@ -4,3 +4,8 @@ obj
 .DS_Store
 appsettings.json
 *.db
+.vs/
+.vs/cokjidlu/DesignTimeBuild/.dtbcache
+.vs/cokjidlu/v16/Server/sqlite3/storage.ide
+.vs/cokjidlu/v16/.suo
+package-lock.json
