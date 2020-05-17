@@ -10,48 +10,51 @@ namespace DataAccess
     {
         public static void SeedData(DataContext ctx)
         {
-            /*
-            List<List<List<RecipeWebScraper>>> scraperRecipes = new List<List<List<RecipeWebScraper>>>();
-            WebScraper ws = new WebScraper();
-            ws.KucharkaProDceru = true;
-            scraperRecipes = ws.getRecipes();
-
-            List<Recipe> recipesDB = new List<Recipe>();
-            List<Ingredient> ingredientsDB = new List<Ingredient>();
-
-            foreach (var wholeScraper in scraperRecipes)
+            if (!ctx.Recipes.Any())
             {
-                foreach (var singleScraper in wholeScraper)
+                Console.WriteLine("start importing recipes");
+                List<List<List<RecipeWebScraper>>> scraperRecipes = new List<List<List<RecipeWebScraper>>>();
+                WebScraper ws = new WebScraper();
+                ws.KucharkaProDceru = true;
+                scraperRecipes = ws.getRecipes();
+
+                List<Recipe> recipesDB = new List<Recipe>();
+                List<Ingredient> ingredientsDB = new List<Ingredient>();
+
+                foreach (var wholeScraper in scraperRecipes)
                 {
-                    foreach (var recipe in singleScraper)
+                    foreach (var singleScraper in wholeScraper)
                     {
-                        recipesDB.Add(
-                            new Recipe {
-                                Id = new Guid(),
-                                Instructions = string.Join("|", recipe.instructions),
-                                Title = recipe.title
-                            }
-                        );
-                        foreach (var ingredients in recipe.ingredients)
+                        foreach (var recipe in singleScraper)
                         {
-                            ingredientsDB.Add(
-                            new Ingredient
-                                {
+                            recipesDB.Add(
+                                new Recipe {
                                     Id = new Guid(),
-                                    Title = ingredients
+                                    Instructions = string.Join("|", recipe.instructions),
+                                    Title = recipe.title
                                 }
                             );
+                            foreach (var ingredients in recipe.ingredients)
+                            {
+                                ingredientsDB.Add(
+                                new Ingredient
+                                    {
+                                        Id = new Guid(),
+                                        Title = ingredients
+                                    }
+                                );
+                            }
                         }
                     }
                 }
-            }
-            ctx.Recipes.AddRange(recipesDB);
-            ctx.SaveChanges();
-            ctx.Ingredients.AddRange(ingredientsDB);
-            ctx.SaveChanges();
-            */
-            if (!ctx.Recipes.Any())
-            {
+                Console.WriteLine("importing recipes to DB");
+                ctx.Recipes.AddRange(recipesDB);
+                ctx.SaveChanges();
+                Console.WriteLine("importing ingredients to DB");
+                ctx.Ingredients.AddRange(ingredientsDB);
+                ctx.SaveChanges();
+                Console.WriteLine("import done");
+                /*
                 var recipes = new List<Recipe>
                 {
                     new Recipe {
@@ -74,9 +77,9 @@ namespace DataAccess
                 };
 
                 ctx.Recipes.AddRange(recipes);
-                ctx.SaveChanges();
+                ctx.SaveChanges();*/
             }
-
+            /*
             if (!ctx.Ingredients.Any())
             {
                 var ingredients = new List<Ingredient>
@@ -101,6 +104,7 @@ namespace DataAccess
                 ctx.Ingredients.AddRange(ingredients);
                 ctx.SaveChanges();
             }
+            */
             /*
             if (!ctx.RecipeIngredients.Any())
             {

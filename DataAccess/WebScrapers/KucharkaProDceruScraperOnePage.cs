@@ -39,52 +39,55 @@ namespace DataAccess.WebScrapers
                 int amountStart;
                 foreach (var recipe in recipesSplitList)
                 {
-                    List<String> instructionsSplitList = new List<string>();
-                    List<String> instructionsReturn = new List<string>();
-
-                    List<String> ingredientsSplitList = new List<string>();
-                    List<String> ingredientsReturn = new List<string>();
-
-                    indexOfTitle = recipe.IndexOf(titleSplitString);
-                    titleHelper = recipe.Substring(indexOfTitle, recipe.IndexOf("</div>", indexOfTitle) - indexOfTitle);
-                    title = titleHelper.Substring(titleHelper.IndexOf(">") + 1, titleHelper.Length - titleHelper.IndexOf(">") - 1);
-
-                    amountStart = recipe.IndexOf(amountSplitString);
-                    if (amountStart == -1)
+                    if (recipe.IndexOf(instructionsSplitString) > 0 && recipe.IndexOf(ingredientsSplitString) > 0)
                     {
-                        amount = string.Empty;
+                        List<String> instructionsSplitList = new List<string>();
+                        List<String> instructionsReturn = new List<string>();
+
+                        List<String> ingredientsSplitList = new List<string>();
+                        List<String> ingredientsReturn = new List<string>();
+
+                        indexOfTitle = recipe.IndexOf(titleSplitString);
+                        titleHelper = recipe.Substring(indexOfTitle, recipe.IndexOf("</div>", indexOfTitle) - indexOfTitle);
+                        title = titleHelper.Substring(titleHelper.IndexOf(">") + 1, titleHelper.Length - titleHelper.IndexOf(">") - 1);
+
+                        amountStart = recipe.IndexOf(amountSplitString);
+                        if (amountStart == -1)
+                        {
+                            amount = string.Empty;
+                        }
+                        else
+                        {
+                            amountHelper = recipe.Substring(recipe.IndexOf(amountSplitString) + amountSplitString.Length, recipe.Length - recipe.IndexOf(amountSplitString) - amountSplitString.Length);
+                            amount = amountHelper.Substring(0, amountHelper.IndexOf("</span>"));
+                        }
+
+
+                        instructionsSplitList = recipe.Split(instructionsSplitString).ToList();
+                        instructionsSplitList.RemoveAt(0);
+                        lastListString = instructionsSplitList[instructionsSplitList.Count() - 1];
+                        lastListString = lastListString.Substring(0, lastListString.IndexOf("</ol>"));
+                        instructionsSplitList[instructionsSplitList.Count() - 1] = lastListString;
+                        foreach (var item in instructionsSplitList)
+                        {
+                            instructionsReturn.Add(item.Substring(0, item.IndexOf("</li>") - 1));
+                        }
+
+
+
+                        ingredientsSplitList = recipe.Split(ingredientsSplitString).ToList();
+                        ingredientsSplitList.RemoveAt(0);
+                        lastListString = ingredientsSplitList[ingredientsSplitList.Count() - 1];
+                        lastListString = lastListString.Substring(0, lastListString.IndexOf("</ul>"));
+                        ingredientsSplitList[ingredientsSplitList.Count() - 1] = lastListString;
+                        foreach (var item in ingredientsSplitList)
+                        {
+                            ingredientsReturn.Add(item.Substring(1, item.IndexOf("</li>") - 1));
+                        }
+
+
+                        RecipesList.Add(new RecipeWebScraper(title, amount, ingredientsReturn, instructionsReturn, url));
                     }
-                    else
-                    {
-                        amountHelper = recipe.Substring(recipe.IndexOf(amountSplitString) + amountSplitString.Length, recipe.Length - recipe.IndexOf(amountSplitString) - amountSplitString.Length);
-                        amount = amountHelper.Substring(0, amountHelper.IndexOf("</span>"));
-                    }
-
-
-                    instructionsSplitList = recipe.Split(instructionsSplitString).ToList();
-                    instructionsSplitList.RemoveAt(0);
-                    lastListString = instructionsSplitList[instructionsSplitList.Count() - 1];
-                    lastListString = lastListString.Substring(0, lastListString.IndexOf("</ol>"));
-                    instructionsSplitList[instructionsSplitList.Count() - 1] = lastListString;
-                    foreach (var item in instructionsSplitList)
-                    {
-                        instructionsReturn.Add(item.Substring(0, item.IndexOf("</li>") - 1));
-                    }
-
-
-
-                    ingredientsSplitList = recipe.Split(ingredientsSplitString).ToList();
-                    ingredientsSplitList.RemoveAt(0);
-                    lastListString = ingredientsSplitList[ingredientsSplitList.Count() - 1];
-                    lastListString = lastListString.Substring(0, lastListString.IndexOf("</ul>"));
-                    ingredientsSplitList[ingredientsSplitList.Count() - 1] = lastListString;
-                    foreach (var item in ingredientsSplitList)
-                    {
-                        ingredientsReturn.Add(item.Substring(1, item.IndexOf("</li>") - 1));
-                    }
-
-
-                    RecipesList.Add(new RecipeWebScraper(title, amount, ingredientsReturn, instructionsReturn, url));
                 }
             }
             return RecipesList;
