@@ -22,7 +22,7 @@ namespace DataAccess.WebScrapers
             html = Regex.Replace(html, @"\s+", " ");
 
             List<String> divSplitList = new List<string>();
-            divSplitList = html.Split("vc_row wpb_row vc_row-fluid").ToList();
+            divSplitList = Regex.Split(html, "vc_row wpb_row vc_row-fluid").ToList();
             if (divSplitList.Count() > 1)
             {
                 foreach (var div in divSplitList)
@@ -31,7 +31,7 @@ namespace DataAccess.WebScrapers
                     {
 
                         List <String> liSplitList = new List<string>();
-                        liSplitList = div.Split("<li>").ToList();
+                        liSplitList = Regex.Split(div, "<li>").ToList();
                         foreach (var li in liSplitList)
                         {
                             hrefInLiIndexStart = li.IndexOf("href=\"");

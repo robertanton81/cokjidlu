@@ -24,7 +24,7 @@ namespace DataAccess.WebScrapers
             WebClient client = new WebClient();
             string html = client.DownloadString(url);
             html = Regex.Replace(html, @"\s+", " ");
-            recipesSplitList = html.Split(recipesSplitString.ToCharArray()).ToList();
+            recipesSplitList = Regex.Split(html, recipesSplitString).ToList();
             if (recipesSplitList.Count > 1)
             {
                 recipesSplitList.RemoveAt(0);
@@ -61,7 +61,7 @@ namespace DataAccess.WebScrapers
                     }
 
 
-                    instructionsSplitList = recipe.Split(instructionsSplitString.ToCharArray()).ToList();
+                    instructionsSplitList = Regex.Split(recipe, instructionsSplitString).ToList();
                     instructionsSplitList.RemoveAt(0);
                     lastListString = instructionsSplitList[instructionsSplitList.Count() - 1];
                     lastListString = lastListString.Substring(0, lastListString.IndexOf("</ol>"));
@@ -73,7 +73,7 @@ namespace DataAccess.WebScrapers
 
 
 
-                    ingredientsSplitList = recipe.Split(ingredientsSplitString.ToCharArray()).ToList();
+                    ingredientsSplitList = Regex.Split(recipe, ingredientsSplitString).ToList();
                     ingredientsSplitList.RemoveAt(0);
                     lastListString = ingredientsSplitList[ingredientsSplitList.Count() - 1];
                     lastListString = lastListString.Substring(0, lastListString.IndexOf("</ul>"));
