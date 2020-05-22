@@ -1,4 +1,4 @@
-﻿using DataAccess.WebScrapers;
+﻿/*using DataAccess.WebScrapers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,3 +21,4 @@ namespace DataAccess
         }
     }
 }
+*/

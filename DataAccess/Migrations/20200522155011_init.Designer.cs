@@ -9,26 +9,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200511182805_init")]
+    [Migration("20200522155011_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0");
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity("Domain.Ingredient", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("IngredientCategory")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("IngredientCategory");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -38,14 +35,11 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Domain.Recipe", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Instructions")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("Instructions");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -54,20 +48,15 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Domain.RecipeIngredients", b =>
                 {
-                    b.Property<Guid>("RecipeId")
-                        .HasColumnType("TEXT");
+                    b.Property<Guid>("RecipeId");
 
-                    b.Property<Guid>("IngredientId")
-                        .HasColumnType("TEXT");
+                    b.Property<Guid>("IngredientId");
 
-                    b.Property<string>("Meassure")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("Meassure");
 
-                    b.Property<int>("NumberOfServings")
-                        .HasColumnType("INTEGER");
+                    b.Property<int>("NumberOfServings");
 
-                    b.Property<int>("Qty")
-                        .HasColumnType("INTEGER");
+                    b.Property<int>("Qty");
 
                     b.HasKey("RecipeId", "IngredientId");
 
@@ -81,14 +70,12 @@ namespace DataAccess.Migrations
                     b.HasOne("Domain.Ingredient", "Ingredient")
                         .WithMany("RecipesIngredients")
                         .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.Recipe", "Recipe")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IRecipe } from '../models/Recipe';
 import axiosAgent from '../api/axiosAgent';
+import styles from './App.module.css';
+import Navbar from './Navbar/Navbar';
 
 type IState = IRecipe[] | null;
 const App: React.FC = () => {
@@ -14,9 +16,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
+      <Navbar />
       {recipes &&
-        <ul>
+        <ul className={styles.list}>
           {recipes.map(recipe => <li key={recipe.id}>{recipe.title}</li>)}
         </ul>}
     </div>
