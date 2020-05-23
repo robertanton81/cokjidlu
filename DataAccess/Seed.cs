@@ -10,6 +10,14 @@ namespace DataAccess
     {
         public static void SeedData(DataContext ctx)
         {
+            // debug for the seed in case of any issues here
+            /*
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
+            */
+
             if (!ctx.Recipes.Any())
             {
                 Console.WriteLine("start importing recipes");

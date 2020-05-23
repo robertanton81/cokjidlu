@@ -62,17 +62,23 @@ namespace DataAccess.WebScrapers
 
 
                     instructionsSplitList = Regex.Split(recipe, instructionsSplitString).ToList();
-                    instructionsSplitList.RemoveAt(0);
-                    lastListString = instructionsSplitList[instructionsSplitList.Count() - 1];
-                    lastListString = lastListString.Substring(0, lastListString.IndexOf("</ol>"));
-                    instructionsSplitList[instructionsSplitList.Count() - 1] = lastListString;
-                    foreach (var item in instructionsSplitList)
+
+                    if (instructionsSplitList.Count() > 1)
                     {
-                        instructionsReturn.Add(item.Substring(0, item.IndexOf("</li>") - 1));
+                        instructionsSplitList.RemoveAt(0);
+                        lastListString = instructionsSplitList[instructionsSplitList.Count() - 1];
+                        lastListString = lastListString.Substring(0, lastListString.IndexOf("</ol>"));
+                        instructionsSplitList[instructionsSplitList.Count() - 1] = lastListString;
+                        foreach (var item in instructionsSplitList)
+                        {
+                            instructionsReturn.Add(item.Substring(0, item.IndexOf("</li>") - 1));
+                        }
                     }
-
-
-
+                    else
+                    {
+                        instructionsReturn.Add("...vařit, vařit, vařit");
+                    }
+                    
                     ingredientsSplitList = Regex.Split(recipe, ingredientsSplitString).ToList();
                     ingredientsSplitList.RemoveAt(0);
                     lastListString = ingredientsSplitList[ingredientsSplitList.Count() - 1];
