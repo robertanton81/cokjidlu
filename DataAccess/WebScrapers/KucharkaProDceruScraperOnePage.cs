@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace DataAccess.WebScrapers
+﻿namespace DataAccess.WebScrapers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     class KucharkaProDceruScraperOnePage
     {
         string recipesSplitString = "<div id=\"zlrecipe-innerdiv\">";

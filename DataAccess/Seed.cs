@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Domain;
-
-namespace DataAccess
+﻿namespace DataAccess
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Domain;
+
     public class Seed
     {
         public static void SeedData(DataContext ctx)
@@ -17,9 +16,54 @@ namespace DataAccess
                 System.Diagnostics.Debugger.Launch();
             }
             */
+            var recipes = new List<Recipe>
+                {
+                    new Recipe {
+                        Id = new Guid(),
+                        Instructions = "nakrájet, uvařit",
+                        Title = "Rajská omáčka"
+                    },
+                    new Recipe
+                    {
+                        Id = new Guid(),
+                        Instructions = "uvařit",
+                        Title = "Bramborová polévka"
+                    },
+                    new Recipe
+                    {
+                        Id = new Guid(),
+                        Instructions = "namazat",
+                        Title = "Palačinky"
+                    }
+                };
+
+            var ingredients = new List<Ingredient>
+                {
+                    new Ingredient
+                    {
+                        Id = new Guid(),
+                        Title = "hladká mouka"
+                    },
+                    new Ingredient
+                    {
+                        Id = new Guid(),
+                        Title = "rajčata"
+                    },
+                    new Ingredient
+                    {
+                        Id = new Guid(),
+                        Title = "brambory"
+                    }
+                };
+
 
             if (!ctx.Recipes.Any())
             {
+                ctx.Recipes.AddRange(recipes);
+                ctx.SaveChanges();
+
+                #region
+                /*
                 Console.WriteLine("start importing recipes");
                 List<List<List<RecipeWebScraper>>> scraperRecipes = new List<List<List<RecipeWebScraper>>>();
                 WebScraper ws = new WebScraper();
@@ -62,6 +106,8 @@ namespace DataAccess
                 ctx.Ingredients.AddRange(ingredientsDB);
                 ctx.SaveChanges();
                 Console.WriteLine("import done");
+
+                */
                 /*
                 var recipes = new List<Recipe>
                 {
@@ -87,47 +133,40 @@ namespace DataAccess
                 ctx.Recipes.AddRange(recipes);
                 ctx.SaveChanges();*/
             }
-            /*
+            #endregion
+            
             if (!ctx.Ingredients.Any())
             {
-                var ingredients = new List<Ingredient>
-                {
-                    new Ingredient
-                    {
-                        Id = new Guid(),
-                        Title = "hladká mouka"
-                    },
-                    new Ingredient
-                    {
-                        Id = new Guid(),
-                        Title = "rajčata"
-                    },
-                    new Ingredient
-                    {
-                        Id = new Guid(),
-                        Title = "brambory"
-                    }
-                };
-
                 ctx.Ingredients.AddRange(ingredients);
                 ctx.SaveChanges();
             }
-            */
-            /*
+
             if (!ctx.RecipeIngredients.Any())
             {
-                var joinTbl = new List<RecipeIngredients>
+                var joinTbl = new List<RecipeIngredients>();
+
+                foreach (var recipe in recipes)
                 {
-                    new RecipeIngredients {RecipeId="rjskOm", IngredientId="rjsk"},
-                    new RecipeIngredients {RecipeId="rjskOm", IngredientId="msl"},
-                    new RecipeIngredients {RecipeId="chlbMsl", IngredientId="msl"},
-                    new RecipeIngredients {RecipeId="chlbMsl", IngredientId="chlb"},
-                };
+                    foreach (var ingredient in ingredients)
+                    {
+                        if (recipe.Title == "Rajská omáčka")
+                        {
+                            if (ingredient.Title == "rajčata")
+                            {
+                                joinTbl.Add(new RecipeIngredients { IngredientId = ingredient.Id, RecipeId = recipe.Id });
+                            }
+
+                            if (ingredient.Title == "hladká mouka")
+                            {
+                                joinTbl.Add(new RecipeIngredients { IngredientId = ingredient.Id, RecipeId = recipe.Id });
+                            }
+                        }
+                    }
+                }
 
                 ctx.RecipeIngredients.AddRange(joinTbl);
                 ctx.SaveChanges();
             }
-            */
         }
     }
 }

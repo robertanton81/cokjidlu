@@ -1,10 +1,8 @@
-﻿using Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-
-namespace DataAccess
+﻿namespace DataAccess
 {
+    using Domain;
+    using Microsoft.EntityFrameworkCore;
+
     public class DataContext: DbContext
     {
         public DataContext(DbContextOptions options) : base(options)
@@ -22,14 +20,14 @@ namespace DataAccess
                 .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
 
             builder.Entity<RecipeIngredients>()
-                .HasOne<Recipe>(ri => ri.Recipe)
-                .WithMany(r => r.RecipeIngredients)
-                .HasForeignKey(ri => ri.RecipeId);
+                .HasOne<Recipe>(r => r.Recipe)
+                .WithMany(ri => ri.RecipeIngredients)
+                .HasForeignKey(r => r.RecipeId);
 
             builder.Entity<RecipeIngredients>()
-                .HasOne<Ingredient>(ri => ri.Ingredient)
-                .WithMany(r => r.RecipesIngredients)
-                .HasForeignKey(ri => ri.IngredientId);
+                .HasOne<Ingredient>(i => i.Ingredient)
+                .WithMany(ri => ri.RecipesIngredients)
+                .HasForeignKey(i => i.IngredientId);
                 
         }
     }

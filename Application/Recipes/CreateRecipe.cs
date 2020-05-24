@@ -1,14 +1,14 @@
-﻿using DataAccess;
-using Domain;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Application.Recipes
+﻿namespace Application.Recipes
 {
+    using DataAccess;
+    using Domain;
+    using FluentValidation;
+    using MediatR;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class CreateRecipe
     {
         public class Command: IRequest
@@ -17,6 +17,16 @@ namespace Application.Recipes
             public string Title { get; set; }
             public List<RecipeIngredients> RecipeIngredients { get; set; }
             public string Instructions { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            // FluentValidationAspNetCore
+            public CommandValidator()
+            {
+                RuleFor(x => x.Title).NotEmpty();
+                RuleFor(x => x.Id).NotEmpty();
+            }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -35,7 +45,9 @@ namespace Application.Recipes
                     Instructions = request.Instructions,
                     Title = request.Title
                 };
-
+                
+                // TODO: add recipe ingredients validation
+                
                 _ctx.Recipes.Add(recipe);
                 var res = await _ctx.SaveChangesAsync() > 0;
                 if (res)
@@ -44,7 +56,7 @@ namespace Application.Recipes
                 } 
                 else
                 {
-                    throw new Exception("Error saving changs");
+                    throw new Exception("Error saving changes");
                 }
             }
         }

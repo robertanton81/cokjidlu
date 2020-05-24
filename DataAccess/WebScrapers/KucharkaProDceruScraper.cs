@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace DataAccess.WebScrapers
+﻿namespace DataAccess.WebScrapers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Runtime.CompilerServices;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
     class KucharkaProDceruScraper
     {
         private static string url = "https://www.kucharkaprodceru.cz/recepty/";

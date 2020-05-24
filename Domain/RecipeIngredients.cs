@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
+    using System;
+
     public class RecipeIngredients
     {
         public Guid RecipeId { get; set; }
 
-        public Recipe Recipe { get; set; }
+        public virtual Recipe Recipe { get; set; }
 
         public Guid IngredientId { get; set; }
 
-        public Ingredient Ingredient { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
 
         /// <summary>
         /// what is the meassure g / kg / ml / spoon
