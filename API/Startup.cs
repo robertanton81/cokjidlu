@@ -12,6 +12,13 @@ namespace API
     using FluentValidation.AspNetCore;
     using API.Middleware;
     using AutoMapper;
+    using Domain;
+    using Microsoft.AspNetCore.Identity;
+    using Application.Interfaces;
+    using Infrastructure.Security;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Text;
 
     public class Startup
     {
@@ -47,6 +54,27 @@ namespace API
 
             services.AddMediatR(typeof(RecipesList.Handler).Assembly);
             services.AddAutoMapper(typeof(RecipesList.Handler));
+
+            var builder = services.AddIdentityCore<AppUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            // TODO: to use the token in development mode, run  dotnet user-secrets set "TokentKey" "super secret key" -p API/
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,15 +91,12 @@ namespace API
                 // app.UseHsts();
             }
 
+            app.UseRouting();
             app.UseCors("CorsPolicy");
-            // app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
 
-            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            // app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

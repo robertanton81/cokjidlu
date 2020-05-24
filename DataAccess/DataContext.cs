@@ -1,9 +1,10 @@
 ﻿namespace DataAccess
 {
     using Domain;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class DataContext: DbContext
+    public class DataContext: IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -16,6 +17,8 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<RecipeIngredients>()
                 .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
 

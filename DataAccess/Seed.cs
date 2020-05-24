@@ -3,11 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Domain;
+    using Microsoft.AspNetCore.Identity;
 
     public class Seed
     {
-        public static void SeedData(DataContext ctx)
+        public static async Task SeedData(DataContext ctx, UserManager<AppUser> userManager)
         {
             // debug for the seed in case of any issues here
             /*
@@ -16,6 +18,18 @@
                 System.Diagnostics.Debugger.Launch();
             }
             */
+
+            if (!ctx.Users.Any())
+            {
+                var testUser = new AppUser
+                {
+                    DisplayName = "testUser_1",
+                    UserName = "testU_1"
+                };
+
+                await userManager.CreateAsync(testUser, "Pa$$w0rd");
+            }
+
             var recipes = new List<Recipe>
                 {
                     new Recipe {

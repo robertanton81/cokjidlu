@@ -9,40 +9,32 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading;
 
-    [ApiController]
-    [Route("api/[controller]")]
-    public class RecipeController : ControllerBase
+    public class RecipeController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public RecipeController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<RecipeDto>>> GetList(CancellationToken ct)
         {
-            return await _mediator.Send(new RecipesList.Query(), ct);
+            return await Mediator.Send(new RecipesList.Query(), ct);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDto>> GetDetail(Guid id)
         {
-            return await _mediator.Send(new RecipeDetail.Query { RecipeId = id });
+            return await Mediator.Send(new RecipeDetail.Query { RecipeId = id });
         }
 
         [HttpPost]
         public async Task<ActionResult<Unit>> CreateRecipe(CreateRecipe.Command cmd)
         {
-            return await _mediator.Send(cmd);
+            return await Mediator.Send(cmd);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> EditRecipe(Guid id, RecipeEdit.Command command)
         {
             command.Id = id;
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
     }
 }
