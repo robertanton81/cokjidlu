@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain
+﻿namespace Domain
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Ingredient
     {
         public Guid Id { get; set; }
@@ -12,6 +11,6 @@ namespace Domain
 
         public string Title { get; set; }
 
-        public List<RecipeIngredients> RecipesIngredients { get; set; }
+        public virtual List<RecipeIngredients> RecipesIngredients { get; set; }
     }
 }

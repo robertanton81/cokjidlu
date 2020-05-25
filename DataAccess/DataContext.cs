@@ -1,11 +1,10 @@
-﻿using Domain;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-
-namespace DataAccess
+﻿namespace DataAccess
 {
-    public class DataContext: DbContext
+    using Domain;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+
+    public class DataContext: IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -18,18 +17,20 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<RecipeIngredients>()
                 .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
 
             builder.Entity<RecipeIngredients>()
-                .HasOne<Recipe>(ri => ri.Recipe)
-                .WithMany(r => r.RecipeIngredients)
-                .HasForeignKey(ri => ri.RecipeId);
+                .HasOne<Recipe>(r => r.Recipe)
+                .WithMany(ri => ri.RecipeIngredients)
+                .HasForeignKey(r => r.RecipeId);
 
             builder.Entity<RecipeIngredients>()
-                .HasOne<Ingredient>(ri => ri.Ingredient)
-                .WithMany(r => r.RecipesIngredients)
-                .HasForeignKey(ri => ri.IngredientId);
+                .HasOne<Ingredient>(i => i.Ingredient)
+                .WithMany(ri => ri.RecipesIngredients)
+                .HasForeignKey(i => i.IngredientId);
                 
         }
     }

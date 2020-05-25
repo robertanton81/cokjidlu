@@ -1,10 +1,8 @@
-﻿using DataAccess.WebScrapers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAccess
+﻿namespace DataAccess
 {
+    using DataAccess.WebScrapers;
+    using System.Collections.Generic;
+
     class WebScraper
     {
         public bool KucharkaProDceru { get; set; }
